@@ -8,38 +8,23 @@ public class MainJava {
 
         int n;
         while (true) {
-            System.out.printf("Please enter the number of elements: ");
-            if (scanner.hasNextInt()) {
-                n = scanner.nextInt();
-                if (n > 0) {
-                    break;
-                } else {
-                    System.out.println("The number of elements must be greater than 0");
-                }
+            n = readIntNumber(scanner, "Please enter the number of elements: ");
+            if (n > 0) {
+                break;
             } else {
-                System.out.println("Please enter an Integer");
-                scanner.next();
+                System.out.println("The number of elements must be greater than 0");
             }
         }
 
 
         int[] numbers = new int[n];
         for (int i = 0; i < n; i++) {
-            while (true) {
-                System.out.printf("Please enter the number " + (i + 1) + ":");
-                if (scanner.hasNextInt()) {
-                    numbers[i] = scanner.nextInt();
-                    break;
-                } else {
-                    System.out.println("Please enter an integer");
-                    scanner.next();
-                }
-            }
+            numbers[i] = readIntNumber(scanner, "Please enter the number " + (i + 1) + ":");
         }
 
-        int maxNumber = Integer.MIN_VALUE;
-        int secondNumber = Integer.MIN_VALUE;
-        for (int i = 0; i < n; i++) {
+        int maxNumber = numbers[0];
+        int secondNumber = maxNumber;
+        for (int i = 1; i < n; i++) {
             if (numbers[i] > maxNumber) {
                 secondNumber = maxNumber;
                 maxNumber = numbers[i];
@@ -48,7 +33,7 @@ public class MainJava {
             }
         }
 
-        if (secondNumber == Integer.MIN_VALUE) {
+        if (secondNumber == maxNumber) {
             System.out.println("The 2nd largest number was not found");
         } else {
             System.out.println("2nd largest number " + secondNumber);
@@ -56,4 +41,21 @@ public class MainJava {
 
         scanner.close();
     }
+
+    static int readIntNumber(Scanner scanner, String intro) {
+        int n;
+        while (true) {
+            System.out.printf(intro);
+            if (scanner.hasNextInt()) {
+                n = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Please enter an integer");
+                scanner.next();
+            }
+        }
+
+        return n;
+    }
+
 }
